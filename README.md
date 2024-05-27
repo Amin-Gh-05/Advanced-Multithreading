@@ -1,62 +1,81 @@
-# Advanced Multithreading
+# Pi Calculator
 
+## Abstract
 
-## Introduction
-In this assignment, you are given three problems focused on various areas of multithreaded programming. Solve each exercise according to the provided guidelines.
+This report explores the implementation of Bellard's algorithm to calculate the value of Pi in Java.
+Bellard's algorithm is an efficient method for computing Pi, offering faster convergence than many traditional algorithms such as the Bailey-Borwein-Plouffe (BBP) formula.
+The implementation details, mathematical background, and performance considerations are discussed.
 
+## Intro
 
-## Objectives
-- Review the concepts of multithreaded programming and utilize them correctly
-- Research Pi calculation algorithms
-- Familiarize yourself with the Semaphore, CountDownLatch, and BigDecimal classes
-- Learn the basics of writing a proper project report
+PI as one of the most influential irrational numbers in vast world of mathematics.
+In basic education - mostly in geometry - we've been taught to define PI as circle's number ration to its radius.
+finding the most accurate PI number's been a classic math problem and issue for scientist since 15th century and earlier.
 
+## Algorithms
 
-## Tasks
-1. Fork this repository and clone the fork to your local machine. Ensure to create a new Git branch before starting your work
-2. Complete the following exercises based on the instructions provided:
+### Nilkantha's series
 
-   - `Calculate Pi`: Calculate the value of Pi up to 1000 digits after the floating point. Find 
-     more instructions in the `PiCalculator` class.
-   - `Semaphore`: Solve a synchronization problem using a Semaphore that allows 2 threads to enter the critical section.  Find more instructions in the `Controller` class.
-3. Write a comprehensive report on the assignment.
+The series was published in the 15th century by the Indian mathematician Nilakantha Somayaji. 
+It's the first accessible algorithm when it comes to finding one.
+We should consider it a classic algorithm with time complexity of O(N * logN * loglogN)
+    
+> Approach: 
+When looking at the pattern of the denominator, we can see that, except for the first term, each term consists of the product of three sequential numbers.
+To find the right term in the denominator, we can use a variable and increase it by two with each iteration.
+Also, note that this is an alternating series, meaning the signs of consecutive terms are different.
 
+### Ramanujan–Sato series
 
-## Notes
-- You can find unit tests for the `Calculate Pi` exercise. Use these to ensure you've implemented the code correctly.
-- You are NOT allowed to use any other synchronization tool for the `Semaphore` exercise. Only Semaphores may be used.
+Examples for levels 1–4 were given by Ramanujan in his 1917 paper.
+It's been basis of many other modern algorithms.
 
+### Chudnovsky series
 
-## Report
-You are expected to write a detailed report on the assignment. This is the most important task 
-expected of you, and over 50% of the assignment's final grade depends on it. Explain the 
-solutions you chose for each exercise but try to focus on the `Calculate Pi` problem.
-<br>You MUST include the following details in your report:
-- The solutions you chose for each exercise and how you implemented them
-- All mathematical algorithms you tried and used for the `Calculate Pi` problem
-- Details on the final algorithm you chose for calculating Pi and its advantages over other algorithms
-- Explanation regarding Semaphore and its use cases
-- All References and Resources (include links where possible)
+The Chudnovsky algorithm is a fast method for calculating the digits of π, based on Ramanujan's π formulae.
+Published by the Chudnovsky brothers in 1988, it was used to calculate π to a billion decimal places.
+The order of the algorithm is O(N * logN ^ 3).
 
-Your report can either be in the format of a PDF or Markdown file (Markdown is preferred). 
-Including graphs, charts, and other appropriate visuals can grant bonus points.
+<img src="resources/chudnovsky.jpg" alt="chudnovsky" width="1200">
 
+### Bailey-Borwein-Plouffe series
 
+Such algorithms are called spigot algorithms.
+The formula was discovered experimentally in 1995 via the PSLQ algorithm, which itself was named one of the Top Ten Algorithms of the Century.
 
-## Evaluation
-- Your code should compile and run without any errors
-- Your code should be well-organized, readable, properly commented and should follow clean code principles
-- Your code should pass all the provided unit tests
-- You should use Git for version control and include meaningful commit messages
-- Your report should be as comprehensive as possible
+<img src="resources/bbp.jpg" alt="bbp" width="1200">
 
+### Bellard's formula
 
-## Submission
-1. Add your mentor as a contributor to the project.
-2. Create a `develop` branch for implementing features.
-3. Use Git for regular code commits.
-4. Push your code and your report to the remote repository.
-5. Submit a pull request to merge the `develop` branch with `main`.
+Bellard's formula was discovered by Fabrice Bellard in 1997. It is about 43% faster than the Bailey–Borwein–Plouffe formula (discovered in 1995).
+It has been used in PiHex, the now-completed distributed computing project.
 
+> One important use of this method is to confirm calculations of all the numbers in pi that have been done using other methods.
+Instead of having to calculate all the numbers in pi twice using two different algorithms to make sure the calculation is accurate, the final numbers in a very long calculation can be checked using Bellard's formula, which is much faster.
 
-The deadline for submitting your code is Friday, May 17 (28th of Ordibehesht). Good luck!
+<img src="resources/bellard.jpg" alt="bellard" width="1200">
+
+## Bugs and Challenges
+
+- The first thing to mention as challenge is working with large numbers with BigDecimal.
+Doing operations with BigDecimal methods could be tricky for a while.
+
+- Defining PI as static attribute could lead to false result in running multiple test cases.
+Everyone. Running test cases separately is a way to solve the problem.
+
+- Rounding mode argument and count of digits after floating point was making trouble.
+There's big difference between different counts.
+
+## Performance Considerations
+
+- Precision: The MathContext class is used to maintain precision.
+
+- Efficiency: Bellard’s algorithm is designed for efficiency, but calculating a large number of digits requires significant computational resources.
+
+- Memory Usage: Arbitrary-precision arithmetic consumes substantial memory, especially for a high number of decimal places.
+
+## Conclusion
+
+Bellard's algorithm provides an efficient way to compute Pi to a large number of decimal places.
+The Java implementation leverages the BigDecimal class to handle the precision required for such calculations.
+This report demonstrates the mathematical foundation and practical implementation details necessary for computing Pi using this algorithm.
